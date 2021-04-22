@@ -1,4 +1,8 @@
 export default {
+  server: {
+    port: 5000, // default: 3000
+    host: '0.0.0.0',
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'deepage',
@@ -12,6 +16,11 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css',
+      },
+
       {
         rel: 'stylesheet',
         href:

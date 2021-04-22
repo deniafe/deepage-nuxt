@@ -15,26 +15,13 @@
 
 <script>
 import { db } from '@/plugins/firebase'
+import { mapGetters } from 'vuex'
 import VRuntimeTemplate from 'v-runtime-template'
 import { nanoid } from 'nanoid'
 export default {
   name: 'LeadPageComponent',
   components: {
     VRuntimeTemplate,
-  },
-  props: {
-    template: {
-      type: String,
-      required: true,
-    },
-    campId: {
-      type: String,
-      required: true,
-    },
-    referredBy: {
-      type: String,
-      default: 'deeviral',
-    },
   },
   data() {
     return {
@@ -61,6 +48,16 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapGetters({
+      user: 'app/user',
+      campId: 'app/campId',
+      body: 'app/body',
+    }),
+    template() {
+      return this.body.html
+    },
+  },
   methods: {
     async save() {
       // Code to get the user unique link
@@ -72,7 +69,7 @@ export default {
       this.campaignId = this.campId
       const data = { ...this.form }
       data.campaignId = this.campId
-      data.referredBy = this.referredBy
+      data.referredBy = this.user.referredBy
       const vm = this
 
       // Check to make sure the lead does not exist in the database
