@@ -9,7 +9,9 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
-  async fetch({ store, req, route, app }) {
+  async fetch(context) {
+    const { store, req, route, app } = context
+    console.log('This a context object', context)
     const { commit, dispatch, state } = store
     const url = req.headers.host
     const ref = route.query.ref
