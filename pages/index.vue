@@ -11,7 +11,7 @@ export default {
   name: 'Home',
   async fetch(context) {
     const { store, route, app } = context
-    console.log('This a context object', context)
+    console.log('This a context object', context.res)
     const { commit, dispatch, state } = store
     // const url = req.headers.host
     const ref = route.query.ref
