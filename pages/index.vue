@@ -1,6 +1,6 @@
 <template>
   <div>
-    <leadPage
+    <LeadPage
       :referred-by="referredBy"
       :template="body"
       :camp-id="campaignId"
@@ -12,14 +12,10 @@
 // @ is an alias to /src
 // import axios from 'axios's
 import { parse } from 'node-html-parser'
-import leadPage from '@/components/leadPage'
 import { db } from '@/plugins/firebase'
 
 export default {
   name: 'Home',
-  components: {
-    leadPage,
-  },
   // head: {
   //   title: {
   //     inner: 'It will be a pleasure',
