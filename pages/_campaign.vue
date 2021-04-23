@@ -14,7 +14,7 @@ export default {
     const { commit, dispatch } = store
     // const url = req.headers.host
     const ref = route.query.ref
-    const subDomain = route.params
+    const subDomain = route.params.campaign
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
     // dispatch('app/getSubdomain', 'instagram.devrl.link')
