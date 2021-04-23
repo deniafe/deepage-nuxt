@@ -12,7 +12,7 @@ export default {
   async fetch(context) {
     const { store, route, app } = context
     const { commit, dispatch, state } = store
-    console.log(context)
+
     // const url = req.headers.host
     const ref = route.query.ref
     // const subDomain = route.params
