@@ -11,14 +11,14 @@ export default {
   name: 'Home',
   async fetch(context) {
     const { store, route, app } = context
-    const { commit, dispatch } = store
+    const { commit, dispatch, state } = store
     // const url = req.headers.host
     const ref = route.query.ref
-    const subDomain = route.params
+    // const subDomain = route.params
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
-    // dispatch('app/getSubdomain', 'instagram.devrl.link')
-    // const subDomain = state.subDomain || 'instagram'
+    dispatch('app/getSubdomain', 'instagram.devrl.link')
+    const subDomain = state.subDomain || 'instagram'
     dispatch('app/getIp')
     commit('app/SET_USER_REF', ref)
 
