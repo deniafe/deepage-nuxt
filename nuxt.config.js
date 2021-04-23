@@ -3,7 +3,6 @@ export default {
     port: 5000, // default: 3000
     host: '0.0.0.0',
   },
-  target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'deepage',
@@ -73,9 +72,9 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
-  generate: {
-    dir: 'dist',
-  },
+  // generate: {
+  //   dir: 'dist',
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
