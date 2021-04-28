@@ -10,21 +10,23 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Home',
   async fetch(context) {
-    const { store, route, app } = context
+    const { store, route, app, req, $axios } = context
     const { commit, dispatch, state } = store
 
-    // const url = req.headers.host
+    const url = req.headers.host
     const ref = route.query.ref
-    // const subDomain = route.params
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
-    dispatch('app/getSubdomain', 'instagram.devrl.link')
+    dispatch('app/getSubdomain', url)
     const subDomain = state.subDomain || 'instagram'
     dispatch('app/getIp')
     commit('app/SET_USER_REF', ref)
 
-    const meta = await dispatch('app/getPage', subDomain)
+    const campaign = await $axios.$get(
+      'https://deeviral-c24fe.web.app/campaigninfo/instagram',
+    )
 
+    const meta = campaign.socialAppearance
     return (() => {
       app.head.meta.push({
         property: 'og:url',
@@ -69,12 +71,15 @@ export default {
   computed: {
     ...mapGetters({
       body: 'app/body',
+      subDomain: 'app/subDomain',
     }),
     css() {
       return this.body.css
     },
   },
   created() {
+    this.$store.dispatch('app/getPage', this.subDomain)
+
     this.addStyling()
   },
   methods: {
