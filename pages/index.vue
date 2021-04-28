@@ -9,41 +9,41 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
-  async fetch(context) {
-    const { store, route, app, req, $axios } = context
-    const { commit, dispatch, state } = store
+  // async fetch(context) {
+  //   const { store, route, app, req, $axios } = context
+  //   const { commit, dispatch, state } = store
 
-    const url = req.headers.host
-    const ref = route.query.ref
+  //   const url = req.headers.host
+  //   const ref = route.query.ref
 
-    // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
-    dispatch('app/getSubdomain', url)
-    const subDomain = state.subDomain || 'instagram'
-    dispatch('app/getIp')
-    commit('app/SET_USER_REF', ref)
+  //   // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
+  //   dispatch('app/getSubdomain', url)
+  //   const subDomain = state.subDomain || 'instagram'
+  //   dispatch('app/getIp')
+  //   commit('app/SET_USER_REF', ref)
 
-    const campaign = await $axios.$get(
-      'https://deeviral-c24fe.web.app/campaigninfo/instagram',
-    )
+  //   const campaign = await $axios.$get(
+  //     'https://deeviral-c24fe.web.app/campaigninfo/instagram',
+  //   )
 
-    const meta = campaign.socialAppearance
-    return (() => {
-      app.head.meta.push({
-        property: 'og:url',
-        content: 'http://devrl.link/' + subDomain,
-      })
-      app.head.meta.push({ property: 'og:type', content: 'article' })
-      app.head.meta.push({ property: 'og:title', content: meta[0].title })
-      app.head.meta.push({
-        property: 'og:description',
-        content: meta[0].content,
-      })
-      app.head.meta.push({
-        property: 'og:image',
-        content: meta[0].image.url,
-      })
-    })()
-  },
+  //   const meta = campaign.socialAppearance
+  //   return (() => {
+  //     app.head.meta.push({
+  //       property: 'og:url',
+  //       content: 'http://devrl.link/' + subDomain,
+  //     })
+  //     app.head.meta.push({ property: 'og:type', content: 'article' })
+  //     app.head.meta.push({ property: 'og:title', content: meta[0].title })
+  //     app.head.meta.push({
+  //       property: 'og:description',
+  //       content: meta[0].content,
+  //     })
+  //     app.head.meta.push({
+  //       property: 'og:image',
+  //       content: meta[0].image.url,
+  //     })
+  //   })()
+  // },
   head: {
     titleTemplate: '%s - Nuxt.js',
     meta: [
@@ -78,7 +78,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('app/getPage', this.subDomain)
+    this.$store.dispatch('app/getPage', 'instagram')
 
     this.addStyling()
   },
