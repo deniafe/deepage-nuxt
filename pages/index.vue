@@ -9,37 +9,81 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
-  fetch(context) {
-    const { store, route, app, req } = context
+  async fetch(context) {
+    const { store, route, req, app, $fire } = context
     const { commit, dispatch, state } = store
 
     const url = req.headers.host
     const ref = route.query.ref
 
+    console.log('host url', url)
+
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
     dispatch('app/getSubdomain', url)
     const subDomain = state.subDomain || 'instagram'
+    console.log('app subDomain', subDomain)
     dispatch('app/getIp')
-    const campaign = dispatch('app/getPage', subDomain)
+    let campaign
+    try {
+      const query = await $fire.firestore
+        .collection('pages')
+        .where('subDomain', '==', subDomain)
+        .where('type', '==', 'leadPage')
+        .get()
+
+      if (!query.empty) {
+        const data = query.docs[0].data()
+        commit('app/SET_BODY_HTML', `<div>${data.html}</div>`)
+        commit('app/SET_CAMPAIGN_ID', data.campaignId)
+        commit('app/SET_BODY_CSS', data.css)
+        // return dispatch('getCampaignInfo', data.campaignId)
+      } else {
+        commit('app/SET_BODY_HTML', `<h1>Page Not found</h1>`)
+      }
+    } catch (e) {
+      console.log('No such document exists!', e)
+    }
+    // const campaign = dispatch('app/getPage', subDomain)
+    try {
+      const doc = await $fire.firestore
+        .collection('campaigns')
+        .doc(state.campId)
+        .get()
+
+      if (doc.exists) {
+        const data = doc.data()
+        campaign = data
+      } else {
+        console.log('This campaign cannot be found from vuex')
+      }
+    } catch (e) {
+      console.log('No such document exists!', e)
+    }
     commit('app/SET_USER_REF', ref)
 
-    const meta = campaign.socialAppearance
+    let meta
+
+    if (campaign) {
+      meta = campaign.socialAppearance
+    }
+
     return (() => {
-      return { meta, app }
-      // app.head.meta.push({
-      //   property: 'og:url',
-      //   content: 'http://devrl.link/' + subDomain,
-      // })
-      // app.head.meta.push({ property: 'og:type', content: 'article' })
-      // app.head.meta.push({ property: 'og:title', content: meta[0].title })
-      // app.head.meta.push({
-      //   property: 'og:description',
-      //   content: meta[0].content,
-      // })
-      // app.head.meta.push({
-      //   property: 'og:image',
-      //   content: meta[0].image.url,
-      // })
+      if (meta) {
+        app.head.meta.push({
+          property: 'og:url',
+          content: 'http://devrl.link/' + subDomain,
+        })
+        app.head.meta.push({ property: 'og:type', content: 'article' })
+        app.head.meta.push({ property: 'og:title', content: meta[0].title })
+        app.head.meta.push({
+          property: 'og:description',
+          content: meta[0].content,
+        })
+        app.head.meta.push({
+          property: 'og:image',
+          content: meta[0].image.url,
+        })
+      }
     })()
   },
   head: {

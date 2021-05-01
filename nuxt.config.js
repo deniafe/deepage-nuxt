@@ -46,11 +46,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    {
-      src: '~/plugins/firebase.js',
-    },
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -67,10 +63,29 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/firebase',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+
+  // Firebase module configuration
+  firebase: {
+    // options
+    config: {
+      // REQUIRED: Official config for firebase.initializeApp(config):
+      apiKey: process.env.FIREBASE_API_KEY,
+      authDomain: 'deeviral-c24fe.firebaseapp.com',
+      databaseURL: 'https://deeviral-c24fe.firebaseio.com',
+      projectId: 'deeviral-c24fe',
+      storageBucket: 'deeviral-c24fe.appspot.com',
+      messagingSenderId: '302883626344',
+      appId: '1:302883626344:web:7f0b91b469a8dca6430add',
+    },
+    services: {
+      firestore: true,
+    },
+  },
 
   // generate: {
   //   dir: 'dist',
