@@ -91,7 +91,7 @@ export default {
           //   }
           // })
 
-          const fbMeta = data.socialAppearance
+          // const fbMeta = data.socialAppearance
 
           // const customActions = data.contest.settings.customActions.map(
           //   (action) => {
@@ -110,7 +110,7 @@ export default {
 
           // commit('share/SET_REWARDS', rewards)
           // commit('share/SET_CUSTOM_ACTIONS', customActions)
-          return fbMeta
+          return data
         } else {
           console.log('This campaign cannot be found from vuex')
         }
