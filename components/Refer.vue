@@ -62,7 +62,7 @@ export default {
           icon: 'fab fa-telegram',
         },
         {
-          href: `https://twitter.com/intent/tweet?url=${this.uniqueLink}`,
+          href: `https://twitter.com/intent/tweet?url=https://testing.devrl.link/`,
           icon: 'fab fa-twitter',
         },
         {
