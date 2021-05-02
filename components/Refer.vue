@@ -34,42 +34,6 @@ export default {
   name: 'Refer',
   data() {
     return {
-      socials: [
-        {
-          href:
-            'http://www.facebook.com/sharer/sharer.php?u=https://instagram.devrl.link',
-          icon: 'fab fa-facebook-f',
-        },
-        {
-          href:
-            'https://www.pinterest.com/pin/create/button/?url=https://vy.tc/jMcJj83&amp;media=https://cdn.vyper.io/0952f47a-f6f9-4c59-aa62-558054c9d691/-/quality/lighter/-/format/auto/null',
-          icon: 'fab fa-pinterest',
-        },
-        {
-          href:
-            'https://web.whatsapp.com/send?text=https://vy.tc/jMcJj83 This%20contest%20is%20amazing!',
-          icon: 'fab fa-whatsapp',
-        },
-        {
-          href:
-            'https://telegram.me/share/url?url=https://vy.tc/jMcJj83&amp;text=This%20contest%20is%20amazing!',
-          icon: 'fab fa-telegram',
-        },
-        {
-          href: 'https://twitter.com/intent/tweet?url=https://vy.tc/jMcJj83',
-          icon: 'fab fa-twitter',
-        },
-        {
-          href:
-            'fb-messenger://share/?link=https://vy.tc/jMcJj83&amp;app_id=1011451708909975',
-          icon: 'fab fa-facebook-messenger',
-        },
-        {
-          href:
-            'mailto:?body=This%20contest%20is%20amazing! https://vy.tc/jMcJj83',
-          icon: 'fas fa-envelope-open text-primary col-span-1',
-        },
-      ],
       link: ' http://instagram.devrl.link',
       copied: false,
     }
@@ -77,6 +41,35 @@ export default {
   computed: {
     ...mapGetters({
       uniqueLink: 'share/uniqueLink',
+      subDomain: 'app/subDomain',
+      socials() {
+        return [
+          {
+            href: `http://www.facebook.com/sharer/sharer.php?u=${this.uniqueLink}`,
+            icon: 'fab fa-facebook-f',
+          },
+          {
+            href: `https://www.pinterest.com/pin-builder/?url=${this.uniqueLink}&media=https://bit.ly/3vjJeih&method=button`,
+            icon: 'fab fa-pinterest',
+          },
+          {
+            href: `https://web.whatsapp.com/send?text=${this.uniqueLink} This%20contest%20is%20amazing!`,
+            icon: 'fab fa-whatsapp',
+          },
+          {
+            href: `https://telegram.me/share/url?url=${this.uniqueLink}&text=This%20contest%20is%20amazing!`,
+            icon: 'fab fa-telegram',
+          },
+          {
+            href: `https://twitter.com/intent/tweet?url=${this.uniqueLink}`,
+            icon: 'fab fa-twitter',
+          },
+          {
+            href: `mailto:?body=This%20contest%20is%20amazing! ${this.uniqueLink}`,
+            icon: 'fas fa-envelope-open text-primary col-span-1',
+          },
+        ]
+      },
     }),
   },
   methods: {

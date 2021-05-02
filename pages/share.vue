@@ -36,6 +36,33 @@ export default {
       referralPoint: 0,
     }
   },
+  fetch(context) {
+    const { store, req } = context
+    const { dispatch } = store
+
+    const url = req.headers.host
+
+    console.log('host url', url)
+
+    // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
+    dispatch('app/getSubdomain', url)
+
+    // try {
+    //   const query = await $fire.firestore
+    //     .collection('campaigns')
+    //     .where('title', '==', subDomain)
+    //     .get()
+
+    //   if (!query.empty) {
+    //     const data = query.docs[0].data()
+    //     campaign = data
+    //   } else {
+    //     console.log('This campaign cannot be found from vuex')
+    //   }
+    // } catch (e) {
+    //   console.log('No such document exists!', e)
+    // }
+  },
   head: {
     titleTemplate: '%s - Nuxt.js',
     meta: [

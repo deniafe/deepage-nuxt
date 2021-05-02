@@ -73,9 +73,13 @@ export default {
       // if (meta) {
       app.head.meta.push({
         property: 'og:url',
-        content: 'http://devrl.link/' + subDomain,
+        content: url,
       })
       app.head.meta.push({ property: 'og:type', content: 'article' })
+      app.head.meta.push({
+        property: 'twitter:card',
+        content: 'summary_large_image',
+      })
       app.head.meta.push({ property: 'og:title', content: meta[0].title })
       app.head.meta.push({
         property: 'og:description',
