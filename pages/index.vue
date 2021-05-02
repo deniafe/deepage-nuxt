@@ -19,7 +19,7 @@ export default {
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
     dispatch('app/getSubdomain', url)
-    const subDomain = state.subDomain || 'testing'
+    const subDomain = state.subDomain || 'instagram'
     console.log('app subDomain', subDomain)
     dispatch('app/getIp')
 
