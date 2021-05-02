@@ -16,8 +16,8 @@
 <script>
 import { db } from '@/plugins/firebase'
 import { mapGetters } from 'vuex'
+import tinyurl from 'tinyurl'
 import VRuntimeTemplate from 'v-runtime-template'
-import { nanoid } from 'nanoid'
 export default {
   name: 'LeadPageComponent',
   components: {
@@ -40,7 +40,6 @@ export default {
         rewards: [],
         campaignId: '',
         pageId: 'WEnDEj5cYmSy0Cy0J4VV',
-        registeredAt: Date.now(),
       },
       alert: {
         status: false,
@@ -58,18 +57,21 @@ export default {
       return this.body.html
     },
   },
+  created() {},
   methods: {
     async save() {
       // Code to get the user unique link
       // TODO: YOU NEED TO COME BACK AND MAKE SURE THE ID IS UNIQUE
       const hostname = window.location.hostname
-      const uuid = nanoid(8)
-      this.form.uniqueLink = 'https://' + hostname + '?r=' + uuid
+      this.form.uniqueLink = 'https://' + hostname + '?ref='
 
       this.campaignId = this.campId
       const data = { ...this.form }
       data.campaignId = this.campId
       data.referredBy = this.user.referredBy
+      data.registeredAt = this.$fireModule.firestore.Timestamp.fromDate(
+        new Date(),
+      )
       const vm = this
 
       // Check to make sure the lead does not exist in the database
@@ -94,12 +96,21 @@ export default {
       async function saveLead() {
         try {
           const doc = await db.collection('leads').add(data)
-
-          vm.$router.push({
-            name: 'share',
-            params: { lead: doc.id, campaignId: vm.campId },
-            // props: { campaignId: vm.campId },
-          })
+          tinyurl.shorten('https://' + hostname + '?ref=' + doc.id).then(
+            async (res) => {
+              await db.collection('leads').doc(doc.id).update({
+                uniqueLink: res,
+              })
+              vm.$router.push({
+                name: 'share',
+                params: { lead: doc.id, campaignId: vm.campId },
+                // props: { campaignId: vm.campId },
+              })
+            },
+            function (err) {
+              console.log(err)
+            },
+          )
         } catch (error) {
           console.log({ error: 'Something went wrong' }, error)
         }

@@ -15,9 +15,9 @@
     "@nuxtjs/firebase": "^7.5.0",
     "core-js": "^3.9.1",
     "firebase": "^8.2.9",
-    "nanoid": "^3.1.22",
     "node-html-parser": "^2.1.0",
     "nuxt": "^2.15.3",
+    "tinyurl": "^1.1.7",
     "v-runtime-template": "^1.10.0"
   },
   "devDependencies": {
