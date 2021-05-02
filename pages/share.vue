@@ -37,15 +37,14 @@ export default {
     }
   },
   fetch(context) {
-    const { store, req } = context
-    const { dispatch } = store
+    const { store, route } = context
+    const { commit } = store
 
-    const url = req.headers.host
+    const uid = route.query.uid
 
-    console.log('host url', url)
+    commit('app/SET_USER_UID', uid)
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
-    dispatch('app/getSubdomain', url)
 
     // try {
     //   const query = await $fire.firestore

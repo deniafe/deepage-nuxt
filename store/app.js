@@ -13,6 +13,7 @@ export default {
       user: {
         ip: '',
         referredBy: '',
+        uid: '',
       },
     }
   },
@@ -34,6 +35,9 @@ export default {
     },
     SET_USER_REF(state, ref) {
       state.user.referredBy = ref
+    },
+    SET_USER_UID(state, uid) {
+      state.user.uid = uid
     },
   },
   actions: {

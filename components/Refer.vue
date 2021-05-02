@@ -42,35 +42,35 @@ export default {
     ...mapGetters({
       uniqueLink: 'share/uniqueLink',
       subDomain: 'app/subDomain',
-      socials() {
-        return [
-          {
-            href: `http://www.facebook.com/sharer/sharer.php?u=${this.uniqueLink}`,
-            icon: 'fab fa-facebook-f',
-          },
-          {
-            href: `https://www.pinterest.com/pin-builder/?url=${this.uniqueLink}&media=https://bit.ly/3vjJeih&method=button`,
-            icon: 'fab fa-pinterest',
-          },
-          {
-            href: `https://web.whatsapp.com/send?text=${this.uniqueLink} This%20contest%20is%20amazing!`,
-            icon: 'fab fa-whatsapp',
-          },
-          {
-            href: `https://telegram.me/share/url?url=${this.uniqueLink}&text=This%20contest%20is%20amazing!`,
-            icon: 'fab fa-telegram',
-          },
-          {
-            href: `https://twitter.com/intent/tweet?url=${this.uniqueLink}`,
-            icon: 'fab fa-twitter',
-          },
-          {
-            href: `mailto:?body=This%20contest%20is%20amazing! ${this.uniqueLink}`,
-            icon: 'fas fa-envelope-open text-primary col-span-1',
-          },
-        ]
-      },
     }),
+    socials() {
+      return [
+        {
+          href: `http://www.facebook.com/sharer/sharer.php?u=${this.uniqueLink}`,
+          icon: 'fab fa-facebook-f',
+        },
+        {
+          href: `https://www.pinterest.com/pin-builder/?url=${this.uniqueLink}&media=https://bit.ly/3vjJeih&method=button`,
+          icon: 'fab fa-pinterest',
+        },
+        {
+          href: `https://web.whatsapp.com/send?text=${this.uniqueLink} This%20contest%20is%20amazing!`,
+          icon: 'fab fa-whatsapp',
+        },
+        {
+          href: `https://telegram.me/share/url?url=${this.uniqueLink}&text=This%20contest%20is%20amazing!`,
+          icon: 'fab fa-telegram',
+        },
+        {
+          href: `https://twitter.com/intent/tweet?url=${this.uniqueLink}`,
+          icon: 'fab fa-twitter',
+        },
+        {
+          href: `mailto:?body=This%20contest%20is%20amazing! ${this.uniqueLink}`,
+          icon: 'fas fa-envelope-open text-primary col-span-1',
+        },
+      ]
+    },
   },
   methods: {
     copyLink() {
