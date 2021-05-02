@@ -15,7 +15,7 @@ export default {
 
     const url = req.headers.host
 
-    console.log('host url', url)
+    console.log('host url', req.headers)
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
     dispatch('app/getSubdomain', url)
@@ -118,6 +118,7 @@ export default {
   },
   created() {
     this.addStyling()
+    console.log('This is the subDomain: ', this.subDomain)
   },
   methods: {
     addStyling() {
