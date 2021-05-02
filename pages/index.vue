@@ -75,6 +75,10 @@ export default {
         property: 'og:url',
         content: url,
       })
+      app.head.meta.push({
+        property: 'og:locale',
+        content: 'en_US',
+      })
       app.head.meta.push({ property: 'og:type', content: 'article' })
       app.head.meta.push({
         property: 'twitter:card',
@@ -101,19 +105,6 @@ export default {
       // hid is used as unique identifier. Do not use `vmid` for it as it will not work
       { hid: 'description', name: 'description', content: 'Meta description' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-
-      // Twitter
-      { name: 'twitter:title', content: 'Content Title' },
-      // with shorthand
-      {
-        n: 'twitter:description',
-        c: 'Content description less than 200 characters',
-      },
-      // ...
-      // Google+ / Schema.org
-      { itemprop: 'name', content: 'Content Title' },
-      { itemprop: 'description', content: 'Content Title' },
-      // ...
     ],
   },
   computed: {
