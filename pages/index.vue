@@ -78,37 +78,37 @@ export default {
     }
     commit('app/SET_USER_REF', ref)
 
-    // let meta
+    let meta
 
-    // if (campaign) {
-    const meta = campaign.socialAppearance
-    // }
+    if (campaign) {
+      meta = campaign.socialAppearance
+    }
 
     return (() => {
-      // if (meta) {
-      app.head.meta.push({
-        property: 'og:url',
-        content: url,
-      })
-      app.head.meta.push({
-        property: 'og:locale',
-        content: 'en_US',
-      })
-      app.head.meta.push({ property: 'og:type', content: 'article' })
-      app.head.meta.push({ property: 'og:title', content: meta[0].title })
-      app.head.meta.push({
-        property: 'og:description',
-        content: meta[0].content,
-      })
-      app.head.meta.push({
-        property: 'og:image',
-        content: meta[0].image.url,
-      })
-      app.head.meta.push({
-        property: 'twitter:card',
-        content: 'summary_large_image',
-      })
-      // }
+      if (meta) {
+        app.head.meta.push({
+          property: 'og:url',
+          content: url,
+        })
+        app.head.meta.push({
+          property: 'og:locale',
+          content: 'en_US',
+        })
+        app.head.meta.push({ property: 'og:type', content: 'article' })
+        app.head.meta.push({ property: 'og:title', content: meta[0].title })
+        app.head.meta.push({
+          property: 'og:description',
+          content: meta[0].content,
+        })
+        app.head.meta.push({
+          property: 'og:image',
+          content: meta[0].image.url,
+        })
+        app.head.meta.push({
+          property: 'twitter:card',
+          content: 'summary_large_image',
+        })
+      }
     })()
   },
   head: {
