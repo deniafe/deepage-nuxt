@@ -1,3 +1,6 @@
+// eslint-disable-next-line nuxt/no-cjs-in-config
+// const fs = require('fs')
+
 export default {
   server: {
     port: 5000, // default: 3000
@@ -74,16 +77,24 @@ export default {
     // options
     config: {
       // REQUIRED: Official config for firebase.initializeApp(config):
-      apiKey: process.env.FIREBASE_API_KEY,
+      apiKey: 'AIzaSyCsbbz4P4VJcfKvRBbVZ3dYfWyH7rz81Ic',
       authDomain: 'deeviral-c24fe.firebaseapp.com',
       databaseURL: 'https://deeviral-c24fe.firebaseio.com',
       projectId: 'deeviral-c24fe',
       storageBucket: 'deeviral-c24fe.appspot.com',
       messagingSenderId: '302883626344',
       appId: '1:302883626344:web:7f0b91b469a8dca6430add',
+      fcmPublicVapidKey:
+        'BEaAGpCuS8lq07Wl8iDVbl5iOkirfCQxLusypX3ayXqWPpfFAj-UQk03R04Z50QlZQaTqcoKIbIXkfzAe_hQkoI', // see step 7
     },
     services: {
       firestore: true,
+      messaging: {
+        createServiceWorker: true,
+        fcmPublicVapidKey:
+          'BEaAGpCuS8lq07Wl8iDVbl5iOkirfCQxLusypX3ayXqWPpfFAj-UQk03R04Z50QlZQaTqcoKIbIXkfzAe_hQkoI',
+        inject: 'console.log("This is the end of the service worker.")',
+      },
     },
   },
 

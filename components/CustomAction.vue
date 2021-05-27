@@ -7,12 +7,14 @@
       {{ properties.subtitle }}
     </div>
 
-    <div
+    <a
       v-if="properties.buttonText"
       class="rounded-md bg-primary text-center grid items-center py-3 mt-4 text-white cursor-pointer hover:scale-105 transition transform duration-200 ease-in-out"
+      :href="properties.url"
+      target="_blank"
     >
       {{ properties.buttonText }}
-    </div>
+    </a>
     <div
       v-if="properties.question"
       class="text-center grid items-center py-2 mt-4 text-red-300 font-bold text-sm"

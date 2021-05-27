@@ -4,7 +4,7 @@ import firebase from 'firebase'
 if (!firebase.apps.length) {
   // Initialize firebase
   const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
+    apiKey: 'AIzaSyCsbbz4P4VJcfKvRBbVZ3dYfWyH7rz81Ic',
     authDomain: 'deeviral-c24fe.firebaseapp.com',
     databaseURL: 'https://deeviral-c24fe.firebaseio.com',
     projectId: 'deeviral-c24fe',
@@ -18,4 +18,4 @@ if (!firebase.apps.length) {
 
 const db = firebase.firestore()
 
-export { db }
+export { db, firebase }

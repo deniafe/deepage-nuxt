@@ -11,7 +11,7 @@ export default {
   name: 'Home',
   async fetch(context) {
     const { store, route, req, app, $fire } = context
-    const { commit, dispatch } = store
+    const { commit, dispatch, state } = store
 
     const url = req.headers.host
 
@@ -19,19 +19,22 @@ export default {
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
     dispatch('app/getSubdomain', url)
-    // const subDomain = state.subDomain || 'instagram'
-    const getSubdomain = (hostname) => {
-      let subDomain
-      // eslint-disable-next-line no-useless-escape
-      const regexParse = /[a-z\-0-9]{2,63}\.[a-z\.]{2,5}$/
-      const urlParts = regexParse.exec(hostname)
-      if (urlParts) {
-        subDomain = hostname.replace(urlParts[0], '').slice(0, -1)
-      }
-      return subDomain
-    }
+    // TODO : COMMENT THIS OUT EVERYTIME YOU NEED TO DEPLOY
+    const subDomain = state.subDomain || 'testing'
 
-    const subDomain = getSubdomain(url)
+    // TODO : UNCOMMENT THIS EVERYTIME YOU NEED TO DEPLOY
+    // const getSubdomain = (hostname) => {
+    //   let subDomain
+    //   // eslint-disable-next-line no-useless-escape
+    //   const regexParse = /[a-z\-0-9]{2,63}\.[a-z\.]{2,5}$/
+    //   const urlParts = regexParse.exec(hostname)
+    //   if (urlParts) {
+    //     subDomain = hostname.replace(urlParts[0], '').slice(0, -1)
+    //   }
+    //   return subDomain
+    // }
+
+    // const subDomain = getSubdomain(url)
     console.log('app subDomain', subDomain)
     dispatch('app/getIp')
 
@@ -128,13 +131,69 @@ export default {
       return this.body.css
     },
   },
+  // async mounted() {
+  //   const currentToken = await this.$fire.messaging.getToken()
+  //   const data = JSON.stringify({
+  //     notification: {
+  //       title: 'firebase',
+  //       body: 'firebase is awesome',
+  //       click_action: 'http://localhost:3000/',
+  //       icon: 'http://localhost:3000/assets/images/brand-logo.png',
+  //     },
+  //     to: currentToken,
+  //   })
+  //   const config = {
+  //     method: 'post',
+  //     url: 'https://fcm.googleapis.com/fcm/send',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: 'key=<yourServerKey>',
+  //     },
+  //     data,
+  //   }
+  //   const response = await this.$axios.$get(config)
+  //   this.$fire.messaging.onMessage((payload) => {
+  //     console.info('Message received: ', payload)
+  //   })
+  //   this.$fire.messaging.onTokenRefresh(async () => {
+  //     const refreshToken = await this.$fire.messaging.getToken()
+  //     console.log('Token Refreshed', refreshToken)
+  //   })
+  //   console.log(response)
+  // },
   created() {
     this.addStyling()
+
+    if (process.client) {
+      console.log(this.$fireModule)
+      this.$fireModule
+        .messaging()
+        .getToken()
+        .then((token) => {
+          console.log('Here is the user token', token)
+          this.$fire.firestore
+            .collection('tokens')
+            .add({
+              token,
+              email: 'deniafe@gmail.com',
+              uid: 'gfdtrfsedwe1234532dsffd',
+            })
+            .then(() => {
+              console.log('success')
+            })
+            .catch((err) =>
+              console.log(`Could not add user token to database`, err),
+            )
+        })
+        .catch((err) => console.log(`User did not give us the permission`, err))
+    }
+
     console.log('This is the subDomain: ', this.subDomain)
   },
   methods: {
     addStyling() {
-      if (process.browser) {
+      if (process.client) {
+        console.log('About to add styling to the mix')
         const style = document.createElement('style')
         style.innerHTML = this.css
         document.head.appendChild(style)

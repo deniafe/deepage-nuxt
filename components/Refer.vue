@@ -62,8 +62,7 @@ export default {
           icon: 'fab fa-telegram',
         },
         {
-          href: `https://twitter.com/intent/tweet?url=https://testing.devrl.link/`,
-          icon: 'fab fa-twitter',
+          href: `https://twitter.com/intent/tweet?url=${this.uniqueLink}`,
         },
         {
           href: `mailto:?body=This%20contest%20is%20amazing! ${this.uniqueLink}`,

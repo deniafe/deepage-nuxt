@@ -33,6 +33,14 @@ export default {
     SET_USER_IP(state, ip) {
       state.user.ip = ip
     },
+    SET_USER_GEOLOCATION(state, data) {
+      state.user.countryCode = data.geoplugin_countryCode
+      state.user.country = data.geoplugin_countryName
+      state.user.city = data.geoplugin_city
+      state.user.continent = data.geoplugin_continentName
+      state.user.currencyCode = data.geoplugin_currencyCode
+      state.user.timezone = data.geoplugin_timezone
+    },
     SET_USER_REF(state, ref) {
       state.user.referredBy = ref
     },
@@ -42,8 +50,22 @@ export default {
   },
   actions: {
     async getIp({ commit }) {
-      const ip = await this.$axios.$get('http://icanhazip.com')
-      commit('SET_USER_IP', ip)
+      // try {
+      const ip = await this.$axios.$get('https://api.ipify.org?format=json')
+      commit('SET_USER_IP', ip.ip)
+
+      console.log('ip from vuex', ip.ip)
+
+      const geo = await this.$axios.$get(
+        `http://www.geoplugin.net/json.gp?ip=${ip}`,
+      )
+
+      console.log('Geo from vuex', geo)
+
+      commit('SET_USER_GEOLOCATION', geo)
+      // } catch (error) {
+      // console.log('ip error', error)
+      // }
     },
     getSubdomain({ commit }, hostname) {
       let subDomain
