@@ -45,6 +45,10 @@ export default {
     ],
   },
 
+  env: {
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
@@ -77,7 +81,7 @@ export default {
     // options
     config: {
       // REQUIRED: Official config for firebase.initializeApp(config):
-      apiKey: 'AIzaSyCsbbz4P4VJcfKvRBbVZ3dYfWyH7rz81Ic',
+      apiKey: process.env.FIREBASE_API_KEY,
       authDomain: 'deeviral-c24fe.firebaseapp.com',
       databaseURL: 'https://deeviral-c24fe.firebaseio.com',
       projectId: 'deeviral-c24fe',

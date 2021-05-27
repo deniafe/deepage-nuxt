@@ -1,4 +1,4 @@
-import { db } from '@/plugins/firebase'
+// import { db } from '@/plugins/firebase'
 
 export default {
   namespaced: true,
@@ -78,6 +78,7 @@ export default {
       commit('SET_SUB_DOMAIN', subDomain)
     },
     async getPage({ commit, dispatch }, subDomain) {
+      const db = this.$fire.firestore
       try {
         const query = await db
           .collection('pages')
@@ -103,6 +104,7 @@ export default {
       }
     },
     async getCampaignInfo({ commit }, id) {
+      const db = this.$fire.firestore
       try {
         const doc = await db.collection('campaigns').doc(id).get()
 

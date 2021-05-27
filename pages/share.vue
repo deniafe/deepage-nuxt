@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { db } from '@/plugins/firebase'
+const db = this.$fire.firestore
 const Actions = () => import('../components/Actions')
 const Rewards = () => import('../components/Rewards')
 const Leaderboards = () => import('../components/Leaderboards')
