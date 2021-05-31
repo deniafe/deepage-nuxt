@@ -11,4 +11,20 @@ firebase.initializeApp({"apiKey":"AIzaSyCsbbz4P4VJcfKvRBbVZ3dYfWyH7rz81Ic","auth
 // messages.
 const messaging = firebase.messaging()
 
-console.log("This is the end of the service worker.")
+messaging.onBackgroundMessage((payload) => {
+          console.log(
+            '[firebase-messaging-sw.js] Received background message ',
+            payload
+          )
+          // Customize notification here
+          const notificationTitle = 'Background Message Title'
+          const notificationOptions = {
+            body: 'Background Message body.',
+            icon: '/firebase-logo.png',
+          }
+
+          self.registration.showNotification(
+            notificationTitle,
+            notificationOptions
+          )
+        })

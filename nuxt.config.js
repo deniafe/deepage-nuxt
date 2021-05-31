@@ -97,7 +97,23 @@ export default {
         createServiceWorker: true,
         fcmPublicVapidKey:
           'BEaAGpCuS8lq07Wl8iDVbl5iOkirfCQxLusypX3ayXqWPpfFAj-UQk03R04Z50QlZQaTqcoKIbIXkfzAe_hQkoI',
-        inject: 'console.log("This is the end of the service worker.")',
+        inject: `messaging.onBackgroundMessage((payload) => {
+          console.log(
+            '[firebase-messaging-sw.js] Received background message ',
+            payload
+          )
+          // Customize notification here
+          const notificationTitle = 'Background Message Title'
+          const notificationOptions = {
+            body: 'Background Message body.',
+            icon: '/firebase-logo.png',
+          }
+  
+          self.registration.showNotification(
+            notificationTitle,
+            notificationOptions
+          )
+        })`,
       },
     },
   },

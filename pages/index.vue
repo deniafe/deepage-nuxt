@@ -20,20 +20,20 @@ export default {
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
     dispatch('app/getSubdomain', url)
     // TODO : COMMENT THIS OUT EVERYTIME YOU NEED TO DEPLOY
-    // const subDomain = 'testing'
+    const subDomain = 'testing'
 
     // TODO : UNCOMMENT THIS EVERYTIME YOU NEED TO DEPLOY
-    const getSubdomain = (hostname) => {
-      let subDomain
-      // eslint-disable-next-line no-useless-escape
-      const regexParse = /[a-z\-0-9]{2,63}\.[a-z\.]{2,5}$/
-      const urlParts = regexParse.exec(hostname)
-      if (urlParts) {
-        subDomain = hostname.replace(urlParts[0], '').slice(0, -1)
-      }
-      return subDomain
-    }
-    const subDomain = getSubdomain(url)
+    // const getSubdomain = (hostname) => {
+    //   let subDomain
+    //   // eslint-disable-next-line no-useless-escape
+    //   const regexParse = /[a-z\-0-9]{2,63}\.[a-z\.]{2,5}$/
+    //   const urlParts = regexParse.exec(hostname)
+    //   if (urlParts) {
+    //     subDomain = hostname.replace(urlParts[0], '').slice(0, -1)
+    //   }
+    //   return subDomain
+    // }
+    // const subDomain = getSubdomain(url)
 
     console.log('app subDomain', subDomain)
     dispatch('app/getIp')
@@ -164,29 +164,29 @@ export default {
   created() {
     this.addStyling()
 
-    if (process.client) {
-      console.log(this.$fireModule)
-      this.$fireModule
-        .messaging()
-        .getToken()
-        .then((token) => {
-          console.log('Here is the user token', token)
-          this.$fire.firestore
-            .collection('tokens')
-            .add({
-              token,
-              email: 'deniafe@gmail.com',
-              uid: 'gfdtrfsedwe1234532dsffd',
-            })
-            .then(() => {
-              console.log('success')
-            })
-            .catch((err) =>
-              console.log(`Could not add user token to database`, err),
-            )
-        })
-        .catch((err) => console.log(`User did not give us the permission`, err))
-    }
+    // if (process.client) {
+    //   console.log(this.$fireModule)
+    //   this.$fireModule
+    //     .messaging()
+    //     .getToken()
+    //     .then((token) => {
+    //       console.log('Here is the user token', token)
+    //       this.$fire.firestore
+    //         .collection('tokens')
+    //         .add({
+    //           token,
+    //           email: 'deniafe@gmail.com',
+    //           uid: 'gfdtrfsedwe1234532dsffd',
+    //         })
+    //         .then(() => {
+    //           console.log('success')
+    //         })
+    //         .catch((err) =>
+    //           console.log(`Could not add user token to database`, err),
+    //         )
+    //     })
+    //     .catch((err) => console.log(`User did not give us the permission`, err))
+    // }
 
     console.log('This is the subDomain: ', this.subDomain)
   },
