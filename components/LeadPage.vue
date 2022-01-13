@@ -15,7 +15,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import tinyurl from 'tinyurl'
+import tinyurl from 'tinyurl'
 import VRuntimeTemplate from 'v-runtime-template'
 export default {
   name: 'LeadPageComponent',
@@ -58,94 +58,94 @@ export default {
   },
   created() {},
   methods: {
-    save() {
-      this.$fire.messaging
-        .getToken()
-        .then((token) => {
-          console.log('Here is the user token', token)
-          this.$fire.firestore
-            .collection('tokens')
-            .add({
-              token,
-              email: 'deniafe@gmail.com',
-              uid: 'gfdtrfsedwe1234532dsffd',
-            })
-            .then(() => {
-              console.log('success')
-            })
-            .catch((err) =>
-              console.log(`Could not add user token to database`, err),
-            )
-        })
-        .catch((err) => console.log(`User did not give us the permission`, err))
-    },
-    // async save() {
-    //   const db = this.$fire.firestore
-    //   // Code to get the user unique link
-    //   // TODO: YOU NEED TO COME BACK AND MAKE SURE THE ID IS UNIQUE
-    //   const hostname = window.location.hostname
-    //   this.form.uniqueLink = 'https://' + hostname + '?ref='
-
-    //   this.campaignId = this.campId
-    //   const data = { ...this.form }
-    //   data.campaignId = this.campId
-    //   data.referredBy = this.user.referredBy
-    //   data.registeredAt = this.$fireModule.firestore.Timestamp.fromDate(
-    //     new Date(),
-    //   )
-    //   const vm = this
-
-    //   // Check to make sure the lead does not exist in the database
-    //   try {
-    //     const query = await db
-    //       .collection('leads')
-    //       .where('email', '==', data.email)
-    //       .where('campaignId', '==', data.campaignId)
-    //       .get()
-
-    //     if (!query.empty) {
-    //       vm.alert.status = true
-    //       vm.alert.message = `Uh oh!! You have already registered for this contest! You can't register twice`
-    //       this.closeAlert()
-    //     } else {
-    //       saveLead()
-    //     }
-    //   } catch (error) {
-    //     console.log(error)
-    //     vm.body = `<h1>An Error occured. Please try again!</h1>`
-    //   }
-
-    //   async function saveLead() {
-    //     try {
-    //       const doc = await db.collection('leads').add(data)
-    //       tinyurl.shorten('https://' + hostname + '?ref=' + doc.id).then(
-    //         async (res) => {
-    //           await db.collection('leads').doc(doc.id).update({
-    //             uniqueLink: res,
-    //           })
-    //           await db
-    //             .collection('leads')
-    //             .doc(vm.user.referredBy)
-    //             .update({
-    //               referralPoints: vm.$fireModule.firestore.FieldValue.increment(
-    //                 1,
-    //               ),
-    //             })
-    //           vm.$router.push({
-    //             name: 'share',
-    //             params: { lead: doc.id, campaignId: vm.campId },
-    //             // props: { campaignId: vm.campId },
-    //           })
-    //         },
-    //         function (err) {
-    //           console.log(err)
-    //         },
-    //       )
-    //     } catch (error) {
-    //       console.log({ error: 'Something went wrong' }, error)
-    //     }
-    //   }
+    // save() {
+    //   this.$fire.messaging
+    //     .getToken()
+    //     .then((token) => {
+    //       console.log('Here is the user token', token)
+    //       this.$fire.firestore
+    //         .collection('tokens')
+    //         .add({
+    //           token,
+    //           email: 'deniafe@gmail.com',
+    //           uid: 'gfdtrfsedwe1234532dsffd',
+    //         })
+    //         .then(() => {
+    //           console.log('success')
+    //         })
+    //         .catch((err) =>
+    //           console.log(`Could not add user token to database`, err),
+    //         )
+    //     })
+    //     .catch((err) => console.log(`User did not give us the permission`, err))
     // },
+    async save() {
+      const db = this.$fire.firestore
+      // Code to get the user unique link
+      // TODO: YOU NEED TO COME BACK AND MAKE SURE THE ID IS UNIQUE
+      const hostname = window.location.hostname
+      this.form.uniqueLink = 'https://' + hostname + '?ref='
+
+      this.campaignId = this.campId
+      const data = { ...this.form }
+      data.campaignId = this.campId
+      data.referredBy = this.user.referredBy
+      data.registeredAt = this.$fireModule.firestore.Timestamp.fromDate(
+        new Date(),
+      )
+      const vm = this
+
+      // Check to make sure the lead does not exist in the database
+      try {
+        const query = await db
+          .collection('leads')
+          .where('email', '==', data.email)
+          .where('campaignId', '==', data.campaignId)
+          .get()
+
+        if (!query.empty) {
+          vm.alert.status = true
+          vm.alert.message = `Uh oh!! You have already registered for this contest! You can't register twice`
+          this.closeAlert()
+        } else {
+          saveLead()
+        }
+      } catch (error) {
+        console.log(error)
+        vm.body = `<h1>An Error occured. Please try again!</h1>`
+      }
+
+      async function saveLead() {
+        try {
+          const doc = await db.collection('leads').add(data)
+          tinyurl.shorten('https://' + hostname + '?ref=' + doc.id).then(
+            async (res) => {
+              await db.collection('leads').doc(doc.id).update({
+                uniqueLink: res,
+              })
+              await db
+                .collection('leads')
+                .doc(vm.user.referredBy)
+                .update({
+                  referralPoints: vm.$fireModule.firestore.FieldValue.increment(
+                    1,
+                  ),
+                })
+              vm.$router.push({
+                name: 'share',
+                params: { lead: doc.id, campaignId: vm.campId },
+                // props: { campaignId: vm.campId },
+              })
+            },
+            function (err) {
+              console.log(err)
+            },
+          )
+        } catch (error) {
+          console.log({ error: 'Something went wrong' }, error)
+        }
+      }
+    },
     closeAlert() {
       console.log('I am inside the close alert function')
       setTimeout(

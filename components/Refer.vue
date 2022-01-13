@@ -74,7 +74,7 @@ export default {
   methods: {
     copyLink() {
       const refLinkToCopy = document.querySelector('#ref-link')
-      refLinkToCopy.setAttribute('type', 'text') // 不是 hidden 才能複製
+      refLinkToCopy.setAttribute('type', 'text') // hidden
       refLinkToCopy.select()
       try {
         document.execCommand('copy')
