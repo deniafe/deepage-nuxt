@@ -55,17 +55,6 @@ export default {
       commit('SET_USER_IP', ip.ip)
 
       console.log('ip from vuex', ip.ip)
-
-      const geo = await this.$axios.$get(
-        `http://www.geoplugin.net/json.gp?ip=${ip}`,
-      )
-
-      console.log('Geo from vuex', geo)
-
-      commit('SET_USER_GEOLOCATION', geo)
-      // } catch (error) {
-      // console.log('ip error', error)
-      // }
     },
     getSubdomain({ commit }, hostname) {
       let subDomain
