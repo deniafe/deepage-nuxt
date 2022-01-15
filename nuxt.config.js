@@ -109,7 +109,7 @@ export default {
             icon: '/firebase-logo.png',
           }
   
-          self.registration.showNotification(
+          self.registration.showNotification( 
             notificationTitle,
             notificationOptions
           )

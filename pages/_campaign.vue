@@ -25,19 +25,19 @@ export default {
     const meta = await dispatch('app/getPage', subDomain)
 
     return (() => {
-      app.head.meta.push({
+      app?.head?.meta?.push({
         property: 'og:url',
         content: 'http://devrl.link/' + subDomain,
       })
       app.head.meta.push({ property: 'og:type', content: 'article' })
-      app.head.meta.push({ property: 'og:title', content: meta[0].title })
+      app.head.meta.push({ property: 'og:title', content: meta[0]?.title })
       app.head.meta.push({
         property: 'og:description',
-        content: meta[0].content,
+        content: meta[0]?.content,
       })
       app.head.meta.push({
         property: 'og:image',
-        content: meta[0].image.url,
+        content: meta[0]?.image.url,
       })
     })()
   },
