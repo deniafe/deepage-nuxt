@@ -122,6 +122,15 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
     ],
   },
+  computed: {
+    ...mapGetters({
+      body: 'app/body',
+      subDomain: 'app/subDomain',
+    }),
+    css() {
+      return this.body.css
+    },
+  },
   async mounted() {
     const { $store, $route, $fire } = this
     const { commit, dispatch } = $store
@@ -165,6 +174,7 @@ export default {
         commit('app/SET_BODY_HTML', `<div>${data.html}</div>`)
         commit('app/SET_CAMPAIGN_ID', data.campaignId)
         commit('app/SET_BODY_CSS', data.css)
+        this.addStyling()
         // return dispatch('getCampaignInfo', data.campaignId)
       } else {
         commit('app/SET_BODY_HTML', `<h1>Page Not found</h1>`)
@@ -172,15 +182,6 @@ export default {
     } catch (e) {
       console.log('No such document exists!', e)
     }
-  },
-  computed: {
-    ...mapGetters({
-      body: 'app/body',
-      subDomain: 'app/subDomain',
-    }),
-    css() {
-      return this.body.css
-    },
   },
   // async mounted() {
   //   const currentToken = await this.$fire.messaging.getToken()
@@ -213,33 +214,7 @@ export default {
   //   console.log(response)
   // },
   created() {
-    this.addStyling()
-
-    // if (process.client) {
-    //   console.log(this.$fireModule)
-    //   this.$fireModule
-    //     .messaging()
-    //     .getToken()
-    //     .then((token) => {
-    //       console.log('Here is the user token', token)
-    //       this.$fire.firestore
-    //         .collection('tokens')
-    //         .add({
-    //           token,
-    //           email: 'deniafe@gmail.com',
-    //           uid: 'gfdtrfsedwe1234532dsffd',
-    //         })
-    //         .then(() => {
-    //           console.log('success')
-    //         })
-    //         .catch((err) =>
-    //           console.log(`Could not add user token to database`, err),
-    //         )
-    //     })
-    //     .catch((err) => console.log(`User did not give us the permission`, err))
-    // }
-
-    console.log('This is the subDomain: ', this.subDomain)
+    // this.addStyling()
   },
   methods: {
     addStyling() {
