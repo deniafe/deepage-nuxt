@@ -123,19 +123,20 @@ export default {
               await db.collection('leads').doc(doc.id).update({
                 uniqueLink: res,
               })
-              await db
-                .collection('leads')
-                .doc(vm.user.referredBy)
-                .update({
-                  referralPoints: vm.$fireModule.firestore.FieldValue.increment(
-                    1,
-                  ),
-                })
               vm.$router.push({
                 name: 'share',
                 params: { lead: doc.id, campaignId: vm.campId },
                 // props: { campaignId: vm.campId },
               })
+              vm.user.referredBy &&
+                (await db
+                  .collection('leads')
+                  .doc(vm.user.referredBy)
+                  .update({
+                    referralPoints: vm.$fireModule.firestore.FieldValue.increment(
+                      1,
+                    ),
+                  }))
             },
             function (err) {
               console.log(err)

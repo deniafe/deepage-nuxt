@@ -135,8 +135,6 @@ export default {
     const { $store, $route, $fire } = this
     const { commit, dispatch } = $store
 
-    const url = window.location.host
-
     console.log('This is the route', $route)
 
     // TODO: THIS WAS SUPPOSED TO BE HOW TO GET THE UNIQUE PAGES. NOW IT'S DIFFERENT. WE ARE USING PARAMS
@@ -155,13 +153,16 @@ export default {
       }
       return subDomain
     }
+    const url = window.location.host
     const subDomain = getSubdomain(url)
 
     console.log('app subDomain', subDomain)
     dispatch('app/getIp')
 
     // Get the user who is referring
-    // const ref = $route.query.ref || subDomain
+    const ref = $route.query.ref
+
+    commit('app/SET_USER_REF', ref)
 
     try {
       const query = await $fire.firestore
